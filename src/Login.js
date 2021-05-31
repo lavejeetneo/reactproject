@@ -1,15 +1,13 @@
-import { Component } from "react";
+import { Component } from "react"
 
-class Signup extends Component {
+class Login extends Component {
     constructor() {
         super()
-        this.state = {}
-    }
-
-    getName = (e)=>{
-        this.setState({
-            name:e.target.value
-        })
+        this.state = {
+            email : '',
+            password : '',
+            msg : '',
+        }
     }
 
     getEmail = (e)=>{
@@ -24,28 +22,35 @@ class Signup extends Component {
         })
     }
 
+    login = (e)=>{
+        e.preventDefault()
+        if(this.state.email === 'test123@gmail.com' && this.state.password === '123456') {
+            this.setState({
+                msg: 'Login Success'
+            })
+        } else {
+            this.setState({
+                msg: 'Invailid email or Password'
+            })
+        }
+    }
+
     render() {
         return (
             <form>
                 <div className="form-group">
-                    <label htmlFor="signupName">Name</label>
-                    <input type="text" onChange={this.getName} className="form-control" id="signupName" placeholder="Enter name"/>
-                    {this.state.name}
-                </div>
-                <div className="form-group">
                     <label htmlFor="signupEmail">Email address</label>
                     <input type="email" onChange={this.getEmail} className="form-control" id="signupEmail" aria-describedby="emailHelp" placeholder="Enter email"/>
-                    {this.state.email}
                 </div>
                 <div className="form-group">
                     <label htmlFor="signupPassword">Password</label>
                     <input type="password" onChange={this.getPassword} className="form-control" id="signupPassword" placeholder="Password"/>
-                    {this.state.password}
                 </div>
-                <button type="submit" className="btn btn-primary">Submit</button>
+                <button type="submit" onClick={this.login} className="btn btn-primary">Login</button>
+                {this.state.msg}
             </form>
         )
     }
 }
 
-export default Signup
+export default Login
