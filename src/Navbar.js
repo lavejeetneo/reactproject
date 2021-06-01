@@ -1,3 +1,5 @@
+import { useState } from "react"
+
 let Navbar = (props)=>{
     console.log(props)
 
@@ -36,6 +38,10 @@ let Navbar = (props)=>{
                     {searchString}
                     <button className="btn btn-outline-success" onClick={search} type="submit">Search</button>
                 </form>
+
+                { !props.isLogedin && <button type="button" class="btn btn-link">Login</button>}
+                { props.isLogedin && <button type="button" class="btn btn-link">Logout</button>}
+
                 </div>
             </div>
         </nav>
