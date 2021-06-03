@@ -1,4 +1,5 @@
 import { useState } from "react"
+import {Link} from "react-router-dom"
 
 let Navbar = (props)=>{
     console.log(props)
@@ -24,10 +25,10 @@ let Navbar = (props)=>{
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                     <li className="nav-item">
-                    <a className="nav-link active" aria-current="page" href="#">{props.data.product}</a>
+                    <Link className="nav-link active" to="/">{props.data.product}</Link>
                     </li>
                     <li className="nav-item">
-                    <a className="nav-link" href="#">Link</a>
+                    <Link className="nav-link" to="/catelog">Catelog</Link>
                     </li>
                     <li className="nav-item">
                     <a className="nav-link disabled" href="#" tabIndex="-1" aria-disabled="true">Disabled</a>
@@ -39,8 +40,9 @@ let Navbar = (props)=>{
                     <button className="btn btn-outline-success" onClick={search} type="submit">Search</button>
                 </form>
 
-                { !props.isLogedin && <button type="button" class="btn btn-link">Login</button>}
-                { props.isLogedin && <button type="button" class="btn btn-link">Logout</button>}
+                { !props.isLogedin && <Link to="/signup"><button type="button" class="btn btn-link">Signup</button></Link>}
+                { !props.isLogedin && <Link to="/login"><button type="button" class="btn btn-link">Login</button></Link>}
+                { props.isLogedin && <Link to="logout"><button type="button" class="btn btn-link">Logout</button></Link>}
 
                 </div>
             </div>
