@@ -1,6 +1,6 @@
 import axios from "axios"
 import { Component, useState } from "react"
-import { Link } from "react-router-dom"
+import { withRouter } from "react-router-dom"
 
 let Login = (props)=>{
     var [user, setUser] = useState({})
@@ -34,8 +34,8 @@ let Login = (props)=>{
                 (res)=>{
                     console.log("response from signup api", res.data)
                     if(res.data.token) {
-                        // props.imformLogin()
-                        console.log(props);
+                        props.imformLogin()
+                        // console.log(props);
                         props.history.push("/")
                     }
                 },
@@ -69,4 +69,4 @@ let Login = (props)=>{
     
 }
 
-export default Login
+export default withRouter(Login)

@@ -1,24 +1,28 @@
 import { useState } from "react"
-import {Link} from "react-router-dom"
+import {Link, withRouter} from "react-router-dom"
 
 let Navbar = (props)=>{
     console.log(props)
 
-    let searchString = 'kuch bhi search karo'
+    var [searchString, setSearchString] = useState('')
+
+    let getSearchText = (e)=>{
+        setSearchString(e.target.value)
+    }
+
     let search = (e) => {
         e.preventDefault()
         console.log(searchString);
-    }
-
-    let getSearchText = (e)=>{
-        searchString = e.target.value
-        console.log(searchString);
+        if(searchString) {
+            let url = "/search?q="+searchString
+            props.history.push(url)
+        }
     }
 
     return (
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
             <div className="container-fluid">
-                <a className="navbar-brand" href="#">{props.p1}</a>
+                <Link className="navbar-brand" to={"/"}>{props.p1}</Link>
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span className="navbar-toggler-icon"></span>
                 </button>
@@ -36,7 +40,6 @@ let Navbar = (props)=>{
                 </ul>
                 <form className="d-flex">
                     <input className="form-control me-2" onChange={getSearchText} type="search" placeholder="Search" aria-label="Search"/>
-                    {searchString}
                     <button className="btn btn-outline-success" onClick={search} type="submit">Search</button>
                 </form>
 
@@ -50,4 +53,4 @@ let Navbar = (props)=>{
     )
 }
 
-export default Navbar
+export default withRouter (Navbar)
