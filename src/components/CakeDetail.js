@@ -37,7 +37,7 @@ let CakeDetail = (props)=>{
 
     let addToCart = (data)=>{
         if(!localStorage.token) {
-            props.history.push('/')
+            props.history.push('/login')
         } else {
             props.dispatch(addCartMiddleware(data))
         }
