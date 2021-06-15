@@ -68,7 +68,7 @@ let Cart = (props)=>{
                                     </thead>
                                     <tbody>
                                         {props.cartCakes?.length > 0 &&
-                                            props.cartCakes.map((each, index) => {
+                                            props.cartCakes?.map((each, index) => {
                                                 totalPrice += each.price * each.quantity
                                                 return (
                                                     <tr>

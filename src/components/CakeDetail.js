@@ -36,8 +36,11 @@ let CakeDetail = (props)=>{
     )
 
     let addToCart = (data)=>{
-        alert('addToCart')
-        props.dispatch(addCartMiddleware(data))
+        if(!localStorage.token) {
+            props.history.push('/')
+        } else {
+            props.dispatch(addCartMiddleware(data))
+        }
     }
 
     return (
