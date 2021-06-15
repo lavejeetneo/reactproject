@@ -1,18 +1,26 @@
 import { Link } from "react-router-dom";
 
 let Cake = (props)=>{
+    let cakename
+    if(props.cakeData.name.length > 14) {
+        cakename = props.cakeData.name.substr(1,14)+'...'
+    }
     return (
-        <Link to={"cake/"+props.cakeData.cakeid}>
-            <div class="col">
-                <div className="card" style={{width:"18rem"}}>
-                    <img src={props.cakeData.image} style={{height:"220px"}} className="card-img-top" alt="..."/>
-                    <div className="card-body">
-                        <h5 className="card-title">{props.cakeData.name}</h5>
-                        <p className="card-text">{props.cakeData.price}</p>
+        <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+            <Link to={"cake/"+props.cakeData?.cakeid}>
+                <div class="card-flyer">
+                    <div class="text-box">
+                        <div class="image-box">
+                            <img src={props.cakeData.image} alt="" />
+                        </div>
+                        <div class="text-container">
+                            <h6>{cakename ? cakename : '...'}</h6>
+                            <h5>$ {props.cakeData.price}</h5>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </Link>
+            </Link>
+        </div>
     )
 }
 

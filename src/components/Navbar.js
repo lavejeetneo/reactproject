@@ -1,8 +1,8 @@
 import { useState } from "react"
+import { connect } from "react-redux"
 import {Link, withRouter} from "react-router-dom"
 
 let Navbar = (props)=>{
-    console.log(props)
 
     var [searchString, setSearchString] = useState('')
 
@@ -19,38 +19,52 @@ let Navbar = (props)=>{
         }
     }
 
+    let logout = () => {
+        props.dispatch({
+            type: "LOGOUT",
+            payload: {
+                token: localStorage.getItem('token')
+            }
+        })
+        props.history.push('/')
+    }
+
+    {console.log(props)}
+
     return (
-        <nav className="navbar navbar-expand-lg navbar-light bg-light">
-            <div className="container-fluid">
-                <Link className="navbar-brand" to={"/"}>{props.p1}</Link>
-                <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span className="navbar-toggler-icon"></span>
-                </button>
-                <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li className="nav-item">
-                    <Link className="nav-link active" to="/">{props.data.product}</Link>
-                    </li>
-                    <li className="nav-item">
-                    <Link className="nav-link" to="/catelog">Catelog</Link>
-                    </li>
-                    <li className="nav-item">
-                    <a className="nav-link disabled" href="#" tabIndex="-1" aria-disabled="true">Disabled</a>
-                    </li>
+        <nav class="navbar navbar-expand-lg navbar-light" style={{backgroundColor:"#5b6672", borderBottom:"1px solid"}}>
+            <Link className="navbar-brand" to={"/"}>{props.p1}</Link>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+                <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                    { props.isAdmin && <Link to="/admin"><button type="button" class="btn">Admin</button></Link>}
                 </ul>
-                <form className="d-flex">
-                    <input className="form-control me-2" onChange={getSearchText} type="search" placeholder="Search" aria-label="Search"/>
-                    <button className="btn btn-outline-success" onClick={search} type="submit">Search</button>
+                <form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" onChange={getSearchText}/>
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit" onClick={search}>Search</button>
                 </form>
 
-                { !props.isLogedin && <Link to="/signup"><button type="button" class="btn btn-link">Signup</button></Link>}
-                { !props.isLogedin && <Link to="/login"><button type="button" class="btn btn-link">Login</button></Link>}
-                { props.isLogedin && <Link to="logout"><button type="button" class="btn btn-link">Logout</button></Link>}
-
-                </div>
+                { !props.isloggedin && <Link to="/signup"><button type="button" class="btn">Signup</button></Link>}
+                { !props.isloggedin && <Link to="/login"><button type="button" class="btn">Login</button></Link>}
+                { props.isloggedin && <button type="button" class="btn btn-link" onClick={logout}>Logout</button>}
+                { props.isloggedin && <Link to="/cart"><button type="button" class="btn">Cart</button></Link>}
             </div>
         </nav>
     )
 }
 
-export default withRouter (Navbar)
+Navbar = withRouter(Navbar)
+
+let mapStateToProps = (state, props) => {
+    return {
+        username: state.AuthReducer.username,
+        isloggedin: state.AuthReducer.isloggedin,
+        totalItems: state.CartReducer.totalItems,
+        isAdmin: state.AuthReducer.isAdmin
+    }
+}
+
+export default connect (mapStateToProps) (Navbar)

@@ -8,7 +8,7 @@ let Home = ()=>{
 
     var [cakes, setCakes] = useState([])
     var [cakesLoaded, setCakesLoaded] = useState(false)
-    var cakeApi = "https://apibyashu.herokuapp.com/api/allcakes"
+    var cakeApi = process.env.REACT_APP_API_BASE_URL+"allcakes"
 
     useEffect(
         ()=>{

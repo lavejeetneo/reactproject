@@ -1,6 +1,8 @@
 import axios from "axios"
 import { Component, useState } from "react"
+import { connect } from "react-redux"
 import { withRouter } from "react-router-dom"
+import {loginmiddleware} from "../reduxstore/middleware"
 
 let Login = (props)=>{
     var [user, setUser] = useState({})
@@ -22,27 +24,14 @@ let Login = (props)=>{
 
     let login = (e)=>{
         e.preventDefault()
+
+        // const pattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
+
         if(!user.email || !user.password) {
             setError("Please fill the details.")
         } else {
-            let apiurl = "https://apibyashu.herokuapp.com/api/login"
-            axios({
-                url:apiurl,
-                method:"post",
-                data:user
-            }).then(
-                (res)=>{
-                    console.log("response from signup api", res.data)
-                    if(res.data.token) {
-                        props.imformLogin()
-                        // console.log(props);
-                        props.history.push("/")
-                    }
-                },
-                (error)=>{
-                    console.log("error from signup api", error);
-                }
-            )
+            alert('loginmiddleware');
+            props.dispatch(loginmiddleware(user))
         }
     }
 
@@ -69,4 +58,12 @@ let Login = (props)=>{
     
 }
 
+// connect adds a prop to login component named as dispatch()
+Login = connect(function(state, props){
+    if(state.AuthReducer.isloggedin){
+        props.history.push("/")
+    }
+})(Login)
+// i passed login to withRouter it return me Login with some addional things
+// then i exported modified Login
 export default withRouter(Login)
