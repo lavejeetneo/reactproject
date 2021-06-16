@@ -17,6 +17,7 @@ export const loginmiddleware = (data) => {
                     localStorage.setItem('userData', JSON.stringify(res.data))
                     console.log(res.data.email);
                     if(res.data.email == 'ashu.lekhi0540@gmail.com') {
+                        localStorage.setItem('isAdmin', true)
                         dispatch({
                             type: "ADMIN_LOGIN_SUCCESS",
                             payload: {

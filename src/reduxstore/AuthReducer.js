@@ -1,12 +1,10 @@
-import { findAllByDisplayValue } from "@testing-library/react"
-
 let AuthReducer = (
     state={
         isloggedin: localStorage.token?true:false,
         username: localStorage.getItem('userData') ? (JSON.parse(localStorage.getItem('userData'))).name : undefined,
         token: localStorage.token,
         isloading: false,
-        isAdmin: false
+        isAdmin: localStorage.isAdmin?true:false,
     },
     action
 )=>{
