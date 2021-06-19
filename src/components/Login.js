@@ -30,7 +30,6 @@ let Login = (props)=>{
         if(!user.email || !user.password) {
             setError("Please fill the details.")
         } else {
-            alert('loginmiddleware');
             props.dispatch(loginmiddleware(user))
         }
     }
